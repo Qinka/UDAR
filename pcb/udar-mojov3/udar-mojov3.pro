@@ -1,4 +1,4 @@
-update=2018/5/11 16:31:31
+update=2018/5/11 19:59:22
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,4 +61,4 @@ LibName29=opto
 LibName30=atmel
 LibName31=contrib
 LibName32=valves
-LibName33=A:/UDAR/pcb/library/mojov3
+LibName33=A:/mojov3-shield-kicad/library/mojov3
