@@ -1,4 +1,4 @@
-update=2018/5/11 19:59:22
+update=2018/5/11 23:41:37
 version=1
 last_client=kicad
 [pcbnew]
@@ -27,7 +27,7 @@ NetIExt=net
 version=1
 [eeschema]
 version=1
-LibDir=
+LibDir=../third-party/mojov3-shield-kicad/library
 [eeschema/libraries]
 LibName1=power
 LibName2=device
@@ -61,4 +61,4 @@ LibName29=opto
 LibName30=atmel
 LibName31=contrib
 LibName32=valves
-LibName33=A:/mojov3-shield-kicad/library/mojov3
+LibName33=A:/UDAR/pcb/third-party/mojov3-shield-kicad/library/mojov3
