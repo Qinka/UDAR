@@ -1,4 +1,4 @@
-update=2018/5/11 23:41:37
+update=2018/5/12 23:23:18
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,11 +23,9 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[general]
-version=1
 [eeschema]
 version=1
-LibDir=../third-party/mojov3-shield-kicad/library
+LibDir=../third-party/random-kicad-lib
 [eeschema/libraries]
 LibName1=power
 LibName2=device
@@ -61,4 +59,8 @@ LibName29=opto
 LibName30=atmel
 LibName31=contrib
 LibName32=valves
-LibName33=A:/UDAR/pcb/third-party/mojov3-shield-kicad/library/mojov3
+LibName33=1602a
+LibName34=hc-sr04
+LibName35=mojov3
+[general]
+version=1
