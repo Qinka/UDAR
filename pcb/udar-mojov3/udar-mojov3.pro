@@ -1,4 +1,4 @@
-update=2018/5/12 23:23:18
+update=2018/5/13 19:24:50
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,6 +23,8 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
+[general]
+version=1
 [eeschema]
 version=1
 LibDir=../third-party/random-kicad-lib
@@ -62,5 +64,4 @@ LibName32=valves
 LibName33=1602a
 LibName34=hc-sr04
 LibName35=mojov3
-[general]
-version=1
+LibName36=zg-mxx
