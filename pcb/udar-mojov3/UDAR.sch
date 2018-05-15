@@ -40,10 +40,10 @@ EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 4 5
+Sheet 3 5
 Title ""
-Date ""
-Rev ""
+Date "2018-05-15"
+Rev "v0.1.0.12"
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -56,7 +56,7 @@ U 1 1 5AF6EF76
 P 6850 2700
 F 0 "M1" H 6650 2875 50  0000 L CNN
 F 1 "Motor_Servo_AirTronics" H 6650 2540 50  0000 L TNN
-F 2 "" H 6850 2510 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 6850 2510 50  0001 C CNN
 F 3 "" H 6850 2510 50  0001 C CNN
 	1    6850 2700
 	1    0    0    -1  
@@ -67,7 +67,7 @@ U 1 1 5AF6EFE4
 P 6850 3250
 F 0 "M2" H 6650 3425 50  0000 L CNN
 F 1 "Motor_Servo_AirTronics" H 6650 3090 50  0000 L TNN
-F 2 "" H 6850 3060 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 6850 3060 50  0001 C CNN
 F 3 "" H 6850 3060 50  0001 C CNN
 	1    6850 3250
 	1    0    0    -1  
@@ -78,7 +78,7 @@ U 1 1 5AF6F011
 P 5800 2200
 F 0 "U1" H 5800 2000 60  0000 C CNN
 F 1 "HC-SR04" H 5800 2900 60  0000 C CNN
-F 2 "" H 5900 2300 60  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 5900 2300 60  0001 C CNN
 F 3 "" H 5900 2300 60  0001 C CNN
 	1    5800 2200
 	1    0    0    -1  

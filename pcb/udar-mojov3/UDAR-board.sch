@@ -40,10 +40,10 @@ EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 3 5
+Sheet 5 5
 Title ""
-Date ""
-Rev ""
+Date "2018-05-15"
+Rev "v0.1.0.12"
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -53,89 +53,208 @@ $EndDescr
 $Comp
 L Mojov3 U3
 U 1 1 5AF8219A
-P 3750 4150
-F 0 "U3" H 3750 4800 60  0000 C CNN
-F 1 "Mojov3" H 3750 2900 60  0000 C CNN
-F 2 "" H 5250 2600 60  0001 C CNN
-F 3 "" H 5250 2600 60  0001 C CNN
-	1    3750 4150
+P 5800 4050
+F 0 "U3" H 5800 4700 60  0000 C CNN
+F 1 "Mojov3" H 5800 2800 60  0000 C CNN
+F 2 "mojov3:mojov3" H 7300 2500 60  0001 C CNN
+F 3 "" H 7300 2500 60  0001 C CNN
+	1    5800 4050
 	1    0    0    -1  
 $EndComp
 $Comp
 L LED D4
 U 1 1 5AF821C0
-P 7850 1450
-F 0 "D4" H 7850 1550 50  0000 C CNN
-F 1 "LED" H 7850 1350 50  0000 C CNN
-F 2 "" H 7850 1450 50  0001 C CNN
-F 3 "" H 7850 1450 50  0001 C CNN
-	1    7850 1450
+P 3200 4600
+F 0 "D4" H 3200 4700 50  0000 C CNN
+F 1 "LED" H 3200 4500 50  0000 C CNN
+F 2 "LEDs:LED_0805" H 3200 4600 50  0001 C CNN
+F 3 "" H 3200 4600 50  0001 C CNN
+	1    3200 4600
 	1    0    0    -1  
 $EndComp
-Text Notes 7700 1700 0    60   ~ 0
+Text Notes 3050 4850 0    60   ~ 0
 STATUS
-Text HLabel 7550 2450 2    60   Input ~ 0
+Text HLabel 3400 1900 0    60   Input ~ 0
 PWM1
-Text HLabel 7550 2550 2    60   Input ~ 0
+Text HLabel 3400 2000 0    60   Input ~ 0
 PWM2
-Text HLabel 7550 2700 2    60   Input ~ 0
+Text HLabel 3400 2150 0    60   Input ~ 0
 Echo
-Text HLabel 7550 2800 2    60   Input ~ 0
+Text HLabel 3400 2250 0    60   Input ~ 0
 Trig
-Text Notes 7750 2950 2    60   ~ 0
+Text Notes 3200 2400 0    60   ~ 0
 UDAR
 Wire Notes Line
-	7400 2350 7400 3050
+	3550 1800 3550 2500
 Wire Notes Line
-	7400 3050 7950 3050
+	3550 2500 3000 2500
 Wire Notes Line
-	7950 3050 7950 2350
+	3000 2500 3000 1800
 Wire Notes Line
-	7950 2350 7400 2350
-Text HLabel 7400 3250 2    60   Input ~ 0
+	3000 1800 3550 1800
+Text HLabel 7950 3600 2    60   Input ~ 0
 E
-Text HLabel 7400 3350 2    60   Input ~ 0
+Text HLabel 7950 3700 2    60   Input ~ 0
 R/W
-Text HLabel 7400 3450 2    60   Input ~ 0
+Text HLabel 7950 3800 2    60   Input ~ 0
 RS
-Text HLabel 7400 3600 2    60   Input ~ 0
+Text HLabel 7950 3500 2    60   Input ~ 0
 D0
-Text HLabel 7400 3700 2    60   Input ~ 0
+Text HLabel 7950 3400 2    60   Input ~ 0
 D1
-Text HLabel 7400 3800 2    60   Input ~ 0
+Text HLabel 7950 3300 2    60   Input ~ 0
 D2
-Text HLabel 7400 3900 2    60   Input ~ 0
+Text HLabel 7950 3200 2    60   Input ~ 0
 D3
-Text HLabel 7400 4000 2    60   Input ~ 0
+Text HLabel 7950 3100 2    60   Input ~ 0
 D4
-Text HLabel 7400 4100 2    60   Input ~ 0
+Text HLabel 7950 3000 2    60   Input ~ 0
 D5
-Text HLabel 7400 4200 2    60   Input ~ 0
+Text HLabel 7950 2900 2    60   Input ~ 0
 D6
-Text HLabel 7400 4300 2    60   Input ~ 0
+Text HLabel 7950 2800 2    60   Input ~ 0
 D7
-Text Notes 7650 4450 2    60   ~ 0
+Text Notes 8200 3950 2    60   ~ 0
 1602A
 Wire Notes Line
-	7300 3200 7300 4500
+	7850 2700 7850 4000
 Wire Notes Line
-	7300 4500 7950 4500
+	7850 4000 8500 4000
 Wire Notes Line
-	7950 4500 7950 3200
+	8500 4000 8500 2700
 Wire Notes Line
-	7950 3200 7300 3200
-Text HLabel 7300 4750 2    60   Input ~ 0
+	8500 2700 7850 2700
+Text HLabel 7950 4300 2    60   Input ~ 0
 UART_RX
-Text HLabel 7300 4850 2    60   Input ~ 0
+Text HLabel 7950 4500 2    60   Input ~ 0
 UART_TX
-Text Notes 7500 5000 2    60   ~ 0
+Text Notes 8150 4650 2    60   ~ 0
 UART
 Wire Notes Line
-	7200 4650 7200 5050
+	7850 4700 8650 4700
 Wire Notes Line
-	7200 5050 8000 5050
+	8650 4200 7850 4200
+$Comp
+L R R11
+U 1 1 5AFA64DB
+P 2800 4850
+F 0 "R11" V 2880 4850 50  0000 C CNN
+F 1 "R" V 2800 4850 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 2730 4850 50  0001 C CNN
+F 3 "" H 2800 4850 50  0001 C CNN
+	1    2800 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR013
+U 1 1 5AFA650A
+P 2800 5200
+F 0 "#PWR013" H 2800 4950 50  0001 C CNN
+F 1 "GND" H 2800 5050 50  0000 C CNN
+F 2 "" H 2800 5200 50  0001 C CNN
+F 3 "" H 2800 5200 50  0001 C CNN
+	1    2800 5200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 4600 3350 4600
+Wire Wire Line
+	3050 4600 2800 4600
+Wire Wire Line
+	2800 4600 2800 4700
+Wire Wire Line
+	2800 5000 2800 5200
+$Comp
+L +3.3V #PWR014
+U 1 1 5AFA655B
+P 6350 5700
+F 0 "#PWR014" H 6350 5550 50  0001 C CNN
+F 1 "+3.3V" H 6350 5840 50  0000 C CNN
+F 2 "" H 6350 5700 50  0001 C CNN
+F 3 "" H 6350 5700 50  0001 C CNN
+	1    6350 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR015
+U 1 1 5AFA6575
+P 6100 5700
+F 0 "#PWR015" H 6100 5550 50  0001 C CNN
+F 1 "+5V" H 6100 5840 50  0000 C CNN
+F 2 "" H 6100 5700 50  0001 C CNN
+F 3 "" H 6100 5700 50  0001 C CNN
+	1    6100 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR016
+U 1 1 5AFA658F
+P 6700 6150
+F 0 "#PWR016" H 6700 5900 50  0001 C CNN
+F 1 "GND" H 6700 6000 50  0000 C CNN
+F 2 "" H 6700 6150 50  0001 C CNN
+F 3 "" H 6700 6150 50  0001 C CNN
+	1    6700 6150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6600 5700 6600 5800
+Wire Wire Line
+	6600 5800 6350 5800
+Wire Wire Line
+	6350 5800 6350 5700
+Wire Wire Line
+	6800 5700 6800 5850
+Wire Wire Line
+	6800 5850 6100 5850
+Wire Wire Line
+	6100 5850 6100 5700
+Wire Wire Line
+	6700 5700 6700 6150
+Wire Wire Line
+	7950 2800 7450 2800
+Wire Wire Line
+	7450 2900 7950 2900
+Wire Wire Line
+	7950 3000 7450 3000
+Wire Wire Line
+	7950 3100 7450 3100
+Wire Wire Line
+	7450 3200 7950 3200
+Wire Wire Line
+	7950 3300 7450 3300
+Wire Wire Line
+	7950 3400 7450 3400
+Wire Wire Line
+	7950 3500 7450 3500
+Wire Wire Line
+	7950 3600 7450 3600
+Wire Wire Line
+	7950 3700 7450 3700
+Wire Wire Line
+	7950 3800 7450 3800
+Wire Wire Line
+	4100 1900 3400 1900
+Wire Wire Line
+	4100 2000 3400 2000
+Wire Wire Line
+	4100 2100 3750 2100
+Wire Wire Line
+	3750 2150 3400 2150
+Wire Wire Line
+	4100 2200 3850 2200
+Wire Wire Line
+	3850 2200 3850 2250
+Wire Wire Line
+	3850 2250 3400 2250
+Wire Wire Line
+	3750 2100 3750 2150
+Wire Wire Line
+	7450 4300 7950 4300
+Wire Wire Line
+	7950 4500 7450 4500
 Wire Notes Line
-	8000 5050 8000 4650
+	8650 4700 8650 4200
 Wire Notes Line
-	8000 4650 7200 4650
+	7850 4200 7850 4700
 $EndSCHEMATC
