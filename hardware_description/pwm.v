@@ -9,15 +9,15 @@
 // The pwn module
 module pwm #(parameter CTR_LEN = 8)
    ( input clk,                       // clock signal
-     input rst,                       // reset signal
+     input                   rst, // reset signal
      input [CTR_LEN - 1 : 0] cmp_reg, // the reigster of compare
-     output sig                       // output signal
-    );
+     output                  pwm                       // output signal
+     );
 
    // signal reg
-   reg      pwm_d, pwm_q;
+   reg                       pwm_d, pwm_q;
    // counter
-   reg      ctr_d, ctr_q;
+   reg [CTR_LEN - 1 : 0]     ctr_d, ctr_q;
 
    assign pwm = pwm_q;
 
