@@ -1,4 +1,4 @@
-update=2018/5/13 19:24:50
+update=2018/5/18 11:39:12
 version=1
 last_client=kicad
 [pcbnew]
@@ -65,3 +65,4 @@ LibName33=1602a
 LibName34=hc-sr04
 LibName35=mojov3
 LibName36=zg-mxx
+LibName37=oled
