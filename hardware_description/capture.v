@@ -23,26 +23,25 @@
  *
  */
 
-module capture #(
-		             parameter OUT_LEN = 8
-	               )(
-                   // The signal to be captured
-                   input                    cap_signal,
-                   // The clock signal
-                   input                    clk,
-	                 // Reset
-	                 input                    rst,
-                   // The counter (it might be overflow)
-                   output [OUT_LEN - 1 : 0] cnt,
-                   // The signal of DONE
-                   output                   done
-                   );
+module capture #(parameter OUT_LEN = 8)
+   (
+    // The signal to be captured
+    input                    cap_signal,
+    // The clock signal
+    input                    clk,
+	  // Reset
+	  input                    rst,
+    // The counter (it might be overflow)
+    output [OUT_LEN - 1 : 0] cnt,
+    // The signal of DONE
+    output                   done
+    );
 
    // Counters
-   reg [OUT_LEN - 1 : 0]                    cnt_d, cnt_q, cnt_o = 0;
+   reg [OUT_LEN - 1 : 0]     cnt_d, cnt_q, cnt_o = 0;
 
    // Status
-   reg                                      status_d, status_q = 1'b0;
+   reg                       status_d, status_q = 1'b0;
 
    assign cnt = cnt_o;
 	 assign done = ! status_q;
