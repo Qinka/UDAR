@@ -69,7 +69,7 @@ module capture #(parameter OUT_LEN = 8)
 			   else
 				   cnt_q <= 1'b0;
 			   status_q <= status_d;
-		  end
+ 		  end
    end
 
 endmodule
