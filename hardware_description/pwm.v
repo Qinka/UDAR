@@ -6,7 +6,6 @@
  */
 
 
-// The pwn module
 module pwm #(parameter CTR_LEN = 8)
    ( input clk,                       // clock signal
      input                   rst, // reset signal

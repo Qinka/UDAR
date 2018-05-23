@@ -48,14 +48,14 @@ module trig #(parameter CNT_LEN = 8)
 
    // Status
    reg                      state_d, state_q = 0;
-   
+
    // Counter
    reg [CNT_LEN - 1 : 0]    cnt_d, cnt_q = 0;
-   
+
    // Signal
    reg                      sig_d, sig_q = 0;
 
-   
+
 
    assign ready = ! state_q;
    assign sig  = sig_q;
@@ -64,19 +64,19 @@ module trig #(parameter CNT_LEN = 8)
       state_d = state_q;
       case (state_q)
         READY: begin
-          if(enable) begin
-             state_d = COUNTING ;
-             cnt_d = 0;
-             sig_d = 0;
-          end
-          else begin
-             sig_d = 0;
-             cnt_d = 0;
-          end
+           if(enable) begin
+              state_d = COUNTING ;
+              cnt_d = 0;
+              sig_d = 0;
+           end
+           else begin
+              sig_d = 0;
+              cnt_d = 0;
+           end
         end // case: READY
-        
+
         COUNTING: begin
-          if(! enable)
+           if(! enable)
              if (cnt_d < timeout) begin
                 sig_d = 1;
                 cnt_d = cnt_q + 1'b1;
@@ -89,7 +89,7 @@ module trig #(parameter CNT_LEN = 8)
       endcase
 
    end
-   
+
    always @(posedge clk) begin
       if(rst) begin
          state_q <= READY;
@@ -99,5 +99,5 @@ module trig #(parameter CNT_LEN = 8)
       cnt_q <= cnt_d;
       sig_q <= sig_d;
    end
-   
+
 endmodule
