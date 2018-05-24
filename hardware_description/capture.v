@@ -72,4 +72,5 @@ module capture #(parameter OUT_LEN = 8)
  		  end
    end
 
-endmodule
+endmodule // capture
+
