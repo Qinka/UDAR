@@ -34,43 +34,45 @@ module timeout #(parameter CNT_LEN = 8)
 
    // counter
    reg [CNT_LEN - 1 : 0]    cnt_d, cnt_q = 1'b1;
-   // status
+   
+   // state
+   localparam
+     READY    = 0,
+     COUNTING = 1;
+   //reg
    reg                      state_d, state_q = 0;
 
    assign done = ~ state_q;
 
    always @(*) begin
-      if (state_q) begin // in counting down
-         if (cnt_q < timeout) begin
-            cnt_d = cnt_q + 1'b1;
-            state_d = state_q;
-         end
-         else begin
-            cnt_d = cnt_q;
-            state_d = 1'b0;
-         end
-      end
-      else begin // ready to count
-         if(enable) begin
-            state_d = 1'b1;
-            cnt_d = 1'b1;
-         end
-         else begin
-            state_d = 1'b0;
-            cnt_d = cnt_q;
-         end
-      end // else: !if(state_q)
+      state_d = state_q;
+      cnt_d = cnt_q;
+      
+      case (state_q)
+        READY: begin
+           if(enable) begin
+              state_d = COUNTING;
+              cnt_d = 1'b1;
+           end
+        end
+        COUNTING: begin
+           if (cnt_q < timeout)
+              cnt_d = cnt_q + 1'b1;
+           else
+              state_d = 1'b0;
+        end
+      endcase
    end // always @ (*)
 
 
    always @(posedge clk or posedge rst) begin
       if (rst) begin
          state_q <= 1'b0;
-         cnt_q <= 1'b1;
+         cnt_q   <= 1'b1;
       end
       else begin
          state_q <= state_d;
-         cnt_q <= cnt_d;
+         cnt_q   <= cnt_d;
       end
    end // always @ (posedge clk or posedge rst)
 

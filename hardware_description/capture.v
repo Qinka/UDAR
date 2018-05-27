@@ -37,20 +37,37 @@ module capture #(parameter OUT_LEN = 8)
     output                   done
     );
 
-   // Counters
-   reg [OUT_LEN - 1 : 0]     cnt_d, cnt_q, cnt_o = 0;
+   localparam
+     READY = 0,
+     CAP   = 1;
 
-   // Status
-   reg                       status_d, status_q = 1'b0;
+   // Counters
+   reg [OUT_LEN - 1 : 0]     cnt_d, cnt_q = 0, cnt_o = 0;
+   
+   // State
+   reg                       state_d, state_q = 1'b0;
 
    assign cnt = cnt_o;
-   assign done = ! status_q;
+   assign done = ! state_q;
 
    // any
    always @(*) begin
-      status_d <= cap_signal;
-      cnt_d <= cnt_q + 1;
-   end
+      state_d = state_q;
+      cnt_d   = cnt_q;
+      
+      case (state_q)
+        READY:
+           if (cap_signal) begin
+              state_d = CAP;
+              cnt_d   = 0;
+           end
+        CAP:
+          if(cap_signal)
+            cnt_d = cnt_q + 1;
+          else
+            state_d = READY;
+      endcase // case (state_q)
+   end // always @ (*)
 
    // cap sig
    always @(negedge cap_signal) begin
@@ -60,15 +77,12 @@ module capture #(parameter OUT_LEN = 8)
    // Clock
    always @(posedge clk or posedge rst) begin
       if (rst) begin
-         status_q <= 1'b1;
+         state_q <= 1'b1;
          cnt_q <= 0;
       end
       else begin
-         if (status_d)
-           cnt_q <= cnt_d;
-         else
-           cnt_q <= 1'b0;
-         status_q <= status_d;
+         cnt_q <= cnt_d;
+         state_q <= state_d;
       end
    end
 

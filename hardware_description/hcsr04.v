@@ -42,6 +42,7 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
     );
 
 
+   // Status
    localparam STATE_LEN = 3;
    localparam
      READY = 0,
@@ -49,41 +50,22 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
      ECHO = 2,
      WAIT = 3,
      READ = 4;
-
-   // Status
+   // state
    reg [STATE_LEN - 1 : 0]   state_d, state_q = 0;
-
-   // Trig enable line
-   reg                       en_d, en_q=0;
-
-   // Ready for trig
-   wire                      ready;
-
-   // Done for capture
-   wire                      done_w;
 
    // Done for output
    reg                       done_d, done_q=0;
 
-
-   // 1MHz clock
-   wire                      clk_fq;
-
+   assign done = done_q;
+   
    // length counter
    reg [CAP_LEN - 1 : 0]     len_d, len_q=0;
-
-   // length from capture
-   wire [15 : 0]             cap_len;
-
-   wire                      trig_s;
-
    assign len = len_q;
 
-   assign done = done_q;
-
-   assign sig_trig = trig_s;
-
    // f d
+   // 1MHz clock
+   wire                      clk_fq;
+   // instance
    fq #(.CNT_LEN(FD_LEN)) u_fq
      ( .clk(clk50M),
        .rst(rst),
@@ -93,6 +75,14 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
 
 
    // trigger
+   // trig signal
+   wire                      trig_s;
+   // Ready for trig
+   wire                      ready;
+   // Trig enable line
+   reg                       en_d, en_q=0;
+   assign sig_trig = trig_s;
+   // instance
    trig #(.CNT_LEN(CNT_LEN)) u_trig
      ( .clk(clk50M),
        .rst(rst),
@@ -103,6 +93,11 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
        );
 
    // high level capture
+   // Done for capture
+   wire                      done_w;
+   // length from capture
+   wire [15 : 0]             cap_len;
+   // instance
    capture #(.OUT_LEN(CAP_LEN)) u_cap
      ( .cap_signal(sig_len),
        .clk(clk_fq),
@@ -114,6 +109,7 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
    always @(*) begin
       en_d = 0;
       state_d = state_q;
+      done_d = done_q;
       case (state_q)
         READY: begin
            if(en && ready) begin
@@ -121,28 +117,19 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
               state_d = TRIG;
               en_d = 1;
            end
-           else begin
-              done_d = done_q;
-              state_d = state_q;
-           end
         end
         TRIG: begin
            if (!ready) begin
-              en_d=0;
               state_d = ECHO;
            end
         end
         ECHO: begin
            if (!done_w)
              state_d = WAIT;
-           else
-             state_d = state_q;
         end
         WAIT: begin
            if (done_w)
              state_d = READ;
-           else
-             state_d = state_q;
         end
         READ: begin
            len_d = cap_len;
@@ -154,16 +141,16 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
 
    always @(posedge clk50M or posedge rst) begin
       if (rst) begin
-         done_q <= 1;
-         len_q <= 1'b0;
+         done_q  <= 1;
+         len_q   <= 1'b0;
          state_q <= READY;
-         en_q <= 0;
+         en_q    <= 0;
       end
       else begin
-         done_q <= done_d;
-         len_q <= len_d;
+         done_q  <= done_d;
+         len_q   <= len_d;
          state_q <= state_d;
-         en_q <= en_d;
+         en_q    <= en_d;
       end // else: !if(rst)
    end
 

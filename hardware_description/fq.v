@@ -45,11 +45,11 @@ module fq #(parameter CNT_LEN = 8)
 
    always @(*) begin
       if (cnt_in > cnt_q) begin
-         cnt_d = cnt_q + 1'b1;
          clk_d = clk_q;
+         cnt_d = cnt_q + 1'b1;
       end
-      else begin
-         clk_d = ~ clk_q;
+         else begin
+            clk_d = ~ clk_q;
          cnt_d = 1'b1;
       end
    end

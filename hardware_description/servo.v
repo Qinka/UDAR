@@ -36,23 +36,10 @@ module servo #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN
     output                  pwm
     );
 
-   // PWM
-   wire                     pwm_w;
-
-   // another clock
-   wire                     clk_fg;
-
-   // FD
-   wire                     clk_fq;
-
-   // pos
-   wire [PWM_LEN - 1 : 0]   pos_w;
-
-   // state
-   reg                      state_d, state_q = 0;
-
-
    // f d
+   // fd output clock
+   wire                     clk_fq;
+   // instance
    fq #(.CNT_LEN(FD_LEN)) u_fq
      ( .clk(clk),
        .rst(rst),
@@ -60,6 +47,12 @@ module servo #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN
        .clk_out(clk_fq)
        );
 
+   // PWM
+   // PWM wire
+   wire                     pwm_w;
+   // pos
+   wire [PWM_LEN - 1 : 0]   pos_w;
+   // instance
    pwm #(.CNT_LEN(PWM_LEN), .CNT_MAX(PWM_MAX)) u_pwm
      ( .clk(clk_fq),
        .rst(rst),
@@ -67,8 +60,6 @@ module servo #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN
        .pwm(pwm_w)
        );
 
-
-   assign done = ~ state_q;
    assign pwm = pwm_w;
    assign pos_w = 0 | pos;
 

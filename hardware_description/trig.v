@@ -62,42 +62,39 @@ module trig #(parameter CNT_LEN = 8)
 
    always @(*) begin
       state_d = state_q;
+      cnt_d = 0;
+      sig_d = 0;
+      
       case (state_q)
         READY: begin
-           if(enable) begin
-              state_d = COUNTING ;
-              cnt_d = 0;
-              sig_d = 0;
-           end
-           else begin
-              sig_d = 0;
-              cnt_d = 0;
-           end
+           if(enable)
+             state_d = COUNTING;
         end // case: READY
 
         COUNTING: begin
            if(! enable)
-             if (cnt_d < timeout) begin
+             if (cnt_q < timeout) begin
                 sig_d = 1;
                 cnt_d = cnt_q + 1'b1;
              end
-             else begin
-                sig_d = 0;
-                state_d = READY;
-             end
+             else
+               state_d = READY;
         end // case: COUNTING
       endcase
 
    end
 
-   always @(posedge clk) begin
+   always @(posedge clk or posedge clk) begin
       if(rst) begin
          state_q <= READY;
+         cnt_q   <= 0;
+         sig_q   <= 0;
       end
-      else
-        state_q <= state_d;
-      cnt_q <= cnt_d;
-      sig_q <= sig_d;
+      else begin
+         state_q <= state_d;
+         cnt_q   <= cnt_d;
+         sig_q   <= sig_d;
+      end
    end
 
 endmodule

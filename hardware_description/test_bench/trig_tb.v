@@ -63,7 +63,7 @@ module trig_tb;
 		enable = 0;
 
 		// Wait 700ns
-		#700
+		#900
 		
 		
 		timeout = 255;		
@@ -73,7 +73,7 @@ module trig_tb;
 		enable = 0;
 		
 		// Wait 2600ns
-		#2600
+		#3000
 		
 		timeout = 255;		
 		#10
