@@ -41,20 +41,14 @@ module timeout #(parameter CNT_LEN = 8)
 
    always @(*) begin
       if (state_q) begin // in counting down
-         if (!enable) begin
-            if (cnt_q < timeout) begin
-               cnt_d = cnt_q + 1'b1;
-               state_d = state_q;
-            end
-            else begin
-               cnt_d = cnt_q;
-               state_d = 1'b0;
-            end
+         if (cnt_q < timeout) begin
+            cnt_d = cnt_q + 1'b1;
+            state_d = state_q;
          end
          else begin
-            state_d = state_q;
             cnt_d = cnt_q;
-         end // else: !if(!enable)
+            state_d = 1'b0;
+         end
       end
       else begin // ready to count
          if(enable) begin

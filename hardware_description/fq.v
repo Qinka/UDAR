@@ -41,13 +41,13 @@ module fq #(parameter CNT_LEN = 8)
    // clock
    reg                      clk_d, clk_q = 1;
 
-	 assign clk_out = clk_q;
+   assign clk_out = clk_q;
 
    always @(*) begin
       if (cnt_in > cnt_q) begin
          cnt_d = cnt_q + 1'b1;
-		     clk_d = clk_q;
-		  end
+         clk_d = clk_q;
+      end
       else begin
          clk_d = ~ clk_q;
          cnt_d = 1'b1;

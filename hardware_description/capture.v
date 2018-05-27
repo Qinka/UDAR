@@ -29,8 +29,8 @@ module capture #(parameter OUT_LEN = 8)
     input                    cap_signal,
     // The clock signal
     input                    clk,
-	  // Reset
-	  input                    rst,
+    // Reset
+    input                    rst,
     // The counter (it might be overflow)
     output [OUT_LEN - 1 : 0] cnt,
     // The signal of DONE
@@ -44,32 +44,32 @@ module capture #(parameter OUT_LEN = 8)
    reg                       status_d, status_q = 1'b0;
 
    assign cnt = cnt_o;
-	 assign done = ! status_q;
+   assign done = ! status_q;
 
-	 // any
-	 always @(*) begin
-		  status_d <= cap_signal;
-		  cnt_d <= cnt_q + 1;
-	 end
+   // any
+   always @(*) begin
+      status_d <= cap_signal;
+      cnt_d <= cnt_q + 1;
+   end
 
-	 // cap sig
-	 always @(negedge cap_signal) begin
-		  cnt_o <= cnt_q;
-	 end
+   // cap sig
+   always @(negedge cap_signal) begin
+      cnt_o <= cnt_q;
+   end
 
    // Clock
    always @(posedge clk or posedge rst) begin
       if (rst) begin
-			   status_q <= 1'b1;
-			   cnt_q <= 0;
-		  end
-		  else begin
-			   if (status_d)
-				   cnt_q <= cnt_d;
-			   else
-				   cnt_q <= 1'b0;
-			   status_q <= status_d;
- 		  end
+         status_q <= 1'b1;
+         cnt_q <= 0;
+      end
+      else begin
+         if (status_d)
+           cnt_q <= cnt_d;
+         else
+           cnt_q <= 1'b0;
+         status_q <= status_d;
+      end
    end
 
 endmodule // capture

@@ -27,19 +27,19 @@
 module pwm #(parameter CNT_LEN = 8, parameter CNT_MAX = 255)
    (
     // clock signal
-     input                   clk,
+    input                   clk,
     // reset signal
-     input                   rst,
+    input                   rst,
     // the reigster of compare
-     input [CNT_LEN - 1 : 0] cmp,
+    input [CNT_LEN - 1 : 0] cmp,
     // output signal
-     output                  pwm
-     );
+    output                  pwm
+    );
 
    // signal reg
-   reg                       pwm_d, pwm_q;
+   reg                      pwm_d, pwm_q;
    // counter
-   reg [CNT_LEN - 1 : 0]     cnt_d, cnt_q;
+   reg [CNT_LEN - 1 : 0]    cnt_d, cnt_q;
 
    assign pwm = pwm_q;
 

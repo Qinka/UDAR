@@ -21,7 +21,7 @@
   *
   * The module for driver of HC-SR04
   *
-  */
+*/
 
 module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
    (
@@ -46,7 +46,7 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
    localparam
      READY = 0,
      TRIG = 1,
-	   ECHO = 2,
+     ECHO = 2,
      WAIT = 3,
      READ = 4;
 
@@ -75,13 +75,13 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
    // length from capture
    wire [15 : 0]             cap_len;
 
-	 wire                      trig_s;
+   wire                      trig_s;
 
-	 assign len = len_q;
+   assign len = len_q;
 
-	 assign done = done_q;
+   assign done = done_q;
 
-	 assign sig_trig = trig_s;
+   assign sig_trig = trig_s;
 
    // f d
    fq #(.CNT_LEN(FD_LEN)) u_fq
@@ -112,32 +112,33 @@ module hcsr04 #(parameter CAP_LEN=16, TIMEOUT=500, CNT_LEN=9, FD_LEN=6, FD_F=25)
        );
 
    always @(*) begin
+      en_d = 0;
+      state_d = state_q;
       case (state_q)
         READY: begin
            if(en && ready) begin
               done_d = 0;
               state_d = TRIG;
-				      en_d = 1;
-			     end
+              en_d = 1;
+           end
            else begin
               done_d = done_q;
               state_d = state_q;
-				      en_d = en_q;
-			     end
+           end
         end
         TRIG: begin
-				   if (!ready) begin
-					    state_d = ECHO;
-				   end
+           if (!ready) begin
+              en_d=0;
+              state_d = ECHO;
+           end
         end
-		    ECHO: begin
-				   if (!done_w)
-					   state_d = WAIT;
-				   else
-					   state_d = state_q;
-		    end
+        ECHO: begin
+           if (!done_w)
+             state_d = WAIT;
+           else
+             state_d = state_q;
+        end
         WAIT: begin
-				   en_d = 0;
            if (done_w)
              state_d = READ;
            else

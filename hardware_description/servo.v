@@ -24,7 +24,7 @@
 */
 
 module servo #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN = 8,
-               parameter FD_LEN = 12, parameter FD_F =250, parameter WAITTIME=100)
+               parameter FD_LEN = 12, parameter FD_F =250)
    (
     // clk
     input                   clk,
@@ -71,7 +71,5 @@ module servo #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN
    assign done = ~ state_q;
    assign pwm = pwm_w;
    assign pos_w = 0 | pos;
-
-
 
 endmodule
