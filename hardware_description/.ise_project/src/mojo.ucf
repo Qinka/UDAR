@@ -30,3 +30,14 @@ NET "avr_tx" LOC = P55 | IOSTANDARD = LVTTL;
 NET "avr_rx" LOC = P59 | IOSTANDARD = LVTTL;
 NET "avr_rx_busy" LOC = P39 | IOSTANDARD = LVTTL;
 
+# UDAR
+# serial
+NET "udar_rx" LOC = P58 | IOSTANDARD = LVTTL;
+NET "udar_tx" LOC = P67 | IOSTANDARD = LVTTL;
+# pwm
+NET "udar_pwm_1" LOC = P94 | IOSTANDARD = LVTTL;
+NET "udar_pwm_2" LOC = P95 | IOSTANDARD = LVTTL;
+# ultrasonic
+NET "udar_len" LOC = P97 | IOSTANDARD = LVTTL;
+NET "udar_len" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "udar_trig" LOC = P98 | IOSTANDARD = LVTTL;

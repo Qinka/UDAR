@@ -17,7 +17,18 @@ module mojo_top(
     // Serial connections
     input avr_tx, // AVR Tx => FPGA Rx
     output avr_rx, // AVR Rx => FPGA Tx
-    input avr_rx_busy // AVR Rx buffer full
+    input avr_rx_busy, // AVR Rx buffer full
+	 
+	 //  ----- for UDAR  -----
+	 // serial
+	 input  udar_rx,
+	 output udar_tx,
+	 // pwm
+	 output udar_pwm_1,
+	 output udar_pwm_2,
+	 // ultrasonic
+	 input  udar_len,
+	 output udar_trig
     );
 
 wire rst = ~rst_n; // make reset active high
@@ -28,5 +39,30 @@ assign avr_rx = 1'bz;
 assign spi_channel = 4'bzzzz;
 
 assign led = 8'b0;
+
+// UDAR
+
+// udar tx
+wire u_tx;
+assign udar_tx = u_tx;
+// pwm
+wire u_pwm_1;
+wire u_pwm_2;
+assign udar_pwm_1 = u_pwm_1;
+assign udar_pwm_2 = u_pwm_2;
+// ultrasonic
+wire u_trig;
+assign udar_trig = u_trig;
+
+ctrl u (
+	.clk(clk),
+	.rst_i(rst),
+	.ser_rx(udar_rx),
+	.ser_tx(u_tx),
+	.servo1(u_pwm_1),
+	.servo2(u_pwm_2),
+	.cap_sig(udar_len),
+	.trig(u_trig)
+	);
 
 endmodule

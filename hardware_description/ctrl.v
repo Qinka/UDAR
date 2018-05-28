@@ -27,7 +27,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
               parameter SER_FD_LEN = 12, parameter SER_FD_F = 250,
               parameter CAP_LEN = 16, parameter HC_TIMEOUT = 500, parameter HC_CNT_LEN = 9,
               parameter HC_FD_LEN = 6, parameter HC_FD_F = 25,
-              parameter CLK_PER_BIT = 50,
+              parameter CLK_PER_BIT = 435,
               parameter SEND_BYTES = 2, parameter SEND_CNT_LEN = 4)
    (
     // Default is 50MHz
@@ -338,7 +338,6 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
          to_en_q <= to_en_q;
          time_q <= time_q;
          state_q <= state_q;
-
          rxd_q <= 1;
       end
       else begin
