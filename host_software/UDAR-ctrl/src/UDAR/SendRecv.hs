@@ -25,6 +25,19 @@ fetchPoint s x y = do
   sendRecv s sendFrame
   threadDelay 400
   len <- sendRecv s sendFrame
+  --
+  -- Translate the Depth X-srv Y-srv format to X Y Z (euclidean space)
+  -- FRIST  STEP: translates X-srv Y-srv to angle(radian)
+  --        e.g.: (X-srv - 150) / 200 * pi
+  -- SECOND STEP: translates angle to spherical coordinate system
+  --        e.g.: \phi   = pi/2 - x_radian
+  --              \theta = pi/2 - y_radian
+  --              \rho   = depth
+  -- THIRD  STEP: translates spherical coordinate to euclidean coordinate
+  --        e.g.: x = \rho * sin \phi * cos \theta
+  --              y = \rho * sin \phi * sin \theta
+  --              z = \rho * cos \phi
+  --
   let xAg = (fromIntegral x - 150) / 200 * pi :: Float
       yAg = (fromIntegral y - 150) / 200 * pi :: Float
       xP = len * sin xAg * cos yAg
