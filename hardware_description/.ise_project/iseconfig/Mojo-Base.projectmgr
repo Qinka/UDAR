@@ -32,13 +32,13 @@
          <ClosedNode>User Constraints</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Generate Post-Place &amp; Route Simulation Model</SelectedItem>
+         <SelectedItem>Generate Programming File</SelectedItem>
       </SelectedItems>
-      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="vertical" >8</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000001d9000000010000000100000000000000000000000064ffffffff000000810000000000000001000001d90000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>Generate Post-Place &amp; Route Simulation Model</CurrentItem>
+      <CurrentItem>Generate Programming File</CurrentItem>
    </ItemView>
    <ItemView guiview="File" >
       <ClosedNodes>

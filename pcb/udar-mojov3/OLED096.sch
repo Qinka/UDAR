@@ -42,11 +42,11 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 5 5
-Title ""
-Date ""
-Rev ""
-Comp ""
-Comment1 ""
+Title "OLED"
+Date "2018-06-03"
+Rev "v0.1.0.15"
+Comp "Johann Lee<me@qinka.pro>"
+Comment1 "GPLv3"
 Comment2 ""
 Comment3 ""
 Comment4 ""
