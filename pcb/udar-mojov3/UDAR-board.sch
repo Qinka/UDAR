@@ -85,24 +85,12 @@ Text HLabel 3400 2250 0    60   Input ~ 0
 Trig
 Text Notes 3200 2400 0    60   ~ 0
 UDAR
-Wire Notes Line
-	3550 1800 3550 2500
-Wire Notes Line
-	3550 2500 3000 2500
-Wire Notes Line
-	3000 2500 3000 1800
-Wire Notes Line
-	3000 1800 3550 1800
 Text HLabel 7950 4300 2    60   Input ~ 0
 UART_RX
 Text HLabel 7950 4500 2    60   Input ~ 0
 UART_TX
 Text Notes 8150 4650 2    60   ~ 0
 UART
-Wire Notes Line
-	7850 4700 8650 4700
-Wire Notes Line
-	8650 4200 7850 4200
 $Comp
 L R R10
 U 1 1 5AFA64DB
@@ -125,14 +113,6 @@ F 3 "" H 2800 5200 50  0001 C CNN
 	1    2800 5200
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	4100 4600 3350 4600
-Wire Wire Line
-	3050 4600 2800 4600
-Wire Wire Line
-	2800 4600 2800 4700
-Wire Wire Line
-	2800 5000 2800 5200
 $Comp
 L +3.3V #PWR012
 U 1 1 5AFA655B
@@ -147,63 +127,25 @@ $EndComp
 $Comp
 L +5V #PWR013
 U 1 1 5AFA6575
-P 6100 5700
-F 0 "#PWR013" H 6100 5550 50  0001 C CNN
-F 1 "+5V" H 6100 5840 50  0000 C CNN
-F 2 "" H 6100 5700 50  0001 C CNN
-F 3 "" H 6100 5700 50  0001 C CNN
-	1    6100 5700
+P 5900 5700
+F 0 "#PWR013" H 5900 5550 50  0001 C CNN
+F 1 "+5V" H 5900 5840 50  0000 C CNN
+F 2 "" H 5900 5700 50  0001 C CNN
+F 3 "" H 5900 5700 50  0001 C CNN
+	1    5900 5700
 	1    0    0    -1  
 $EndComp
 $Comp
 L GND #PWR014
 U 1 1 5AFA658F
-P 6700 6150
-F 0 "#PWR014" H 6700 5900 50  0001 C CNN
-F 1 "GND" H 6700 6000 50  0000 C CNN
-F 2 "" H 6700 6150 50  0001 C CNN
-F 3 "" H 6700 6150 50  0001 C CNN
-	1    6700 6150
+P 6700 6850
+F 0 "#PWR014" H 6700 6600 50  0001 C CNN
+F 1 "GND" H 6700 6700 50  0000 C CNN
+F 2 "" H 6700 6850 50  0001 C CNN
+F 3 "" H 6700 6850 50  0001 C CNN
+	1    6700 6850
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	6600 5700 6600 5800
-Wire Wire Line
-	6600 5800 6350 5800
-Wire Wire Line
-	6350 5800 6350 5700
-Wire Wire Line
-	6800 5700 6800 5850
-Wire Wire Line
-	6800 5850 6100 5850
-Wire Wire Line
-	6100 5850 6100 5700
-Wire Wire Line
-	6700 5700 6700 6150
-Wire Wire Line
-	4100 1900 3400 1900
-Wire Wire Line
-	4100 2000 3400 2000
-Wire Wire Line
-	4100 2100 3750 2100
-Wire Wire Line
-	3750 2150 3400 2150
-Wire Wire Line
-	4100 2200 3850 2200
-Wire Wire Line
-	3850 2200 3850 2250
-Wire Wire Line
-	3850 2250 3400 2250
-Wire Wire Line
-	3750 2100 3750 2150
-Wire Wire Line
-	7450 4300 7950 4300
-Wire Wire Line
-	7950 4500 7450 4500
-Wire Notes Line
-	8650 4700 8650 4200
-Wire Notes Line
-	7850 4200 7850 4700
 $Comp
 L Buzzer BZ1
 U 1 1 5AFE3AD4
@@ -281,6 +223,98 @@ F 3 "" H 2200 4300 50  0001 C CNN
 	1    2200 4300
 	0    1    1    0   
 $EndComp
+Text Notes 1900 4000 0    60   ~ 0
+Directly drive or use NPN.
+Text HLabel 8000 3100 2    60   Input ~ 0
+CLK
+Text HLabel 8000 3250 2    60   Input ~ 0
+DATA
+Text HLabel 8000 3400 2    60   Input ~ 0
+RST
+Text HLabel 8000 3550 2    60   Input ~ 0
+DC
+Text HLabel 8000 3700 2    60   Input ~ 0
+CS
+$Comp
+L GND #PWR017
+U 1 1 5AFE7641
+P 7700 3800
+F 0 "#PWR017" H 7700 3550 50  0001 C CNN
+F 1 "GND" H 7700 3650 50  0000 C CNN
+F 2 "" H 7700 3800 50  0001 C CNN
+F 3 "" H 7700 3800 50  0001 C CNN
+	1    7700 3800
+	1    0    0    -1  
+$EndComp
+Text Notes 8500 3900 2    60   ~ 0
+0.96 OLED\n
+$Comp
+L AP1117-50 U4
+U 1 1 5B0C1F15
+P 6350 6150
+F 0 "U4" H 6200 6275 50  0000 C CNN
+F 1 "AP1117-50" H 6350 6275 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-223-3_TabPin2" H 6350 6350 50  0001 C CNN
+F 3 "" H 6450 5900 50  0001 C CNN
+	1    6350 6150
+	-1   0    0    -1  
+$EndComp
+Wire Notes Line
+	3550 1800 3550 2500
+Wire Notes Line
+	3550 2500 3000 2500
+Wire Notes Line
+	3000 2500 3000 1800
+Wire Notes Line
+	3000 1800 3550 1800
+Wire Notes Line
+	7850 4700 8650 4700
+Wire Notes Line
+	8650 4200 7850 4200
+Wire Wire Line
+	4100 4600 3350 4600
+Wire Wire Line
+	3050 4600 2800 4600
+Wire Wire Line
+	2800 4600 2800 4700
+Wire Wire Line
+	2800 5000 2800 5200
+Wire Wire Line
+	6600 5700 6600 5800
+Wire Wire Line
+	6600 5800 6350 5800
+Wire Wire Line
+	6350 5800 6350 5700
+Wire Wire Line
+	6800 5700 6800 6150
+Wire Wire Line
+	5900 5700 5900 6150
+Wire Wire Line
+	6700 5700 6700 6850
+Wire Wire Line
+	4100 1900 3400 1900
+Wire Wire Line
+	4100 2000 3400 2000
+Wire Wire Line
+	4100 2100 3750 2100
+Wire Wire Line
+	3750 2150 3400 2150
+Wire Wire Line
+	4100 2200 3850 2200
+Wire Wire Line
+	3850 2200 3850 2250
+Wire Wire Line
+	3850 2250 3400 2250
+Wire Wire Line
+	3750 2100 3750 2150
+Wire Wire Line
+	7450 4300 7950 4300
+Wire Wire Line
+	7950 4500 7450 4500
+Wire Notes Line
+	8650 4700 8650 4200
+Wire Notes Line
+	7850 4200 7850 4700
 Wire Wire Line
 	1550 3900 1550 3750
 Wire Wire Line
@@ -318,29 +352,6 @@ Wire Notes Line
 	1800 4450 2500 4450
 Wire Notes Line
 	2500 4450 2500 4200
-Text Notes 1900 4000 0    60   ~ 0
-Directly drive or use NPN.
-Text HLabel 8000 3100 2    60   Input ~ 0
-CLK
-Text HLabel 8000 3250 2    60   Input ~ 0
-DATA
-Text HLabel 8000 3400 2    60   Input ~ 0
-RST
-Text HLabel 8000 3550 2    60   Input ~ 0
-DC
-Text HLabel 8000 3700 2    60   Input ~ 0
-CS
-$Comp
-L GND #PWR017
-U 1 1 5AFE7641
-P 7700 3800
-F 0 "#PWR017" H 7700 3550 50  0001 C CNN
-F 1 "GND" H 7700 3650 50  0000 C CNN
-F 2 "" H 7700 3800 50  0001 C CNN
-F 3 "" H 7700 3800 50  0001 C CNN
-	1    7700 3800
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7700 3800 7700 3700
 Wire Wire Line
@@ -353,8 +364,6 @@ Wire Notes Line
 	8900 3950 8900 2950
 Wire Notes Line
 	8900 2950 7900 2950
-Text Notes 8500 3900 2    60   ~ 0
-0.96 OLED\n
 Wire Wire Line
 	7450 3000 7750 3000
 Wire Wire Line
@@ -379,4 +388,11 @@ Wire Wire Line
 	7550 3600 7550 3100
 Wire Wire Line
 	7550 3100 8000 3100
+Wire Wire Line
+	6350 6450 6700 6450
+Connection ~ 6700 6450
+Wire Wire Line
+	6800 6150 6650 6150
+Wire Wire Line
+	5900 6150 6050 6150
 $EndSCHEMATC
