@@ -38,7 +38,13 @@ assign spi_miso = 1'bz;
 assign avr_rx = 1'bz;
 assign spi_channel = 4'bzzzz;
 
-assign led = 8'b0;
+
+assign led[0] = ~ u_tx;
+assign led[1] = ~ udar_rx;
+assign led[2] = u_pwm_1;
+assign led[3] = u_pwm_2;
+assign led[4] = 0;
+assign led[7:5] = 0;
 
 // UDAR
 
@@ -54,7 +60,7 @@ assign udar_pwm_2 = u_pwm_2;
 wire u_trig;
 assign udar_trig = u_trig;
 
-ctrl u (
+ctrl #(.CLK_PER_BIT(434)) u (
 	.clk(clk),
 	.rst_i(rst),
 	.ser_rx(udar_rx),

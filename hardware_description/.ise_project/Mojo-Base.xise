@@ -145,7 +145,7 @@
     <file xil_pn:name="src/top_tb.v" xil_pn:type="FILE_VERILOG">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
       <association xil_pn:name="PostMapSimulation" xil_pn:seqID="87"/>
-      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="87"/>
+      <association xil_pn:name="PostRouteSimulation" xil_pn:seqID="0"/>
       <association xil_pn:name="PostTranslateSimulation" xil_pn:seqID="87"/>
     </file>
   </files>

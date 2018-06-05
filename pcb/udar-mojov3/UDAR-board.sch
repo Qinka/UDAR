@@ -307,10 +307,6 @@ Wire Wire Line
 	3850 2250 3400 2250
 Wire Wire Line
 	3750 2100 3750 2150
-Wire Wire Line
-	7450 4300 7950 4300
-Wire Wire Line
-	7950 4500 7450 4500
 Wire Notes Line
 	8650 4700 8650 4200
 Wire Notes Line
@@ -395,4 +391,16 @@ Wire Wire Line
 	6800 6150 6650 6150
 Wire Wire Line
 	5900 6150 6050 6150
+Wire Wire Line
+	7950 4300 7750 4300
+Wire Wire Line
+	7750 4300 7750 4200
+Wire Wire Line
+	7750 4200 7450 4200
+Wire Wire Line
+	7450 4300 7650 4300
+Wire Wire Line
+	7650 4300 7650 4500
+Wire Wire Line
+	7650 4500 7950 4500
 $EndSCHEMATC

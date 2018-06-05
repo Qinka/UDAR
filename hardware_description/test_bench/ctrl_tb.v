@@ -37,7 +37,7 @@ module ctrl_tb;
 	wire trig;
 
 	// Instantiate the Unit Under Test (UUT)
-	ctrl #(.CLK_PER_BIT(50)) uut (
+	ctrl uut (
 		.clk(clk), 
 		.rst_i(rst_i), 
 		.ser_rx(rx), 
@@ -59,11 +59,15 @@ module ctrl_tb;
 		#100;
 		rst_i =0;
 		
-		#10000;
+		#200_000;
 		
-		// send 0b0000_1111
+		// send 0b0000_0011
 		rx = 0; // start bit
 		#1000;
+		rx = 1;
+		#1000;
+		rx = 1;
+		#1000;
 		rx = 0;
 		#1000;
 		rx = 0;
@@ -72,13 +76,9 @@ module ctrl_tb;
 		#1000;
 		rx = 0;
 		#1000;
-		rx = 1;
+		rx = 0;
 		#1000;
-		rx = 1;
-		#1000;
-		rx = 1;
-		#1000;
-		rx = 1;
+		rx = 0;
 		#1000;
 		rx = 1; // end bit
 		#1000;
@@ -126,6 +126,29 @@ module ctrl_tb;
 		#1000;
 		rx = 1; // end bit
 		#1000;
+		
+		
+		#200000;
+		// send udar trig
+		rx = 0; // start bit
+		#1000;
+		rx = 0;
+		#1000;
+		rx = 0;
+		#1000;
+		rx = 1;
+		#1000;
+		rx = 1;
+		#1000;
+		rx = 0;
+		#1000;
+		rx = 0;
+		#1000;
+		rx = 0;
+		#1000;
+		rx = 0;
+		#1000;
+		rx = 1; // end bit
 		
 		#11000; // for trig
 		cap_sig = 1;

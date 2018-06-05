@@ -183,9 +183,7 @@ $EndComp
 Wire Wire Line
 	4650 4100 4650 3900
 Wire Wire Line
-	3950 3800 3950 3900
-Wire Wire Line
-	3950 3900 3950 4200
+	3950 3800 3950 4200
 Wire Wire Line
 	3950 3900 4050 3900
 Wire Wire Line
@@ -313,9 +311,7 @@ Wire Wire Line
 Wire Wire Line
 	9700 4200 8550 4200
 Wire Wire Line
-	8550 4100 8550 4200
-Wire Wire Line
-	8550 4200 8550 4400
+	8550 4100 8550 4400
 Connection ~ 8550 4200
 $Comp
 L +3.3V #PWR09
@@ -329,18 +325,16 @@ F 3 "" H 9700 2400 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9700 2400 9700 2500
-Wire Wire Line
-	9700 2500 9700 2950
+	9700 2400 9700 2950
 Wire Wire Line
 	8550 2650 8550 2500
 Wire Wire Line
 	8550 2500 9700 2500
 Connection ~ 9700 2500
 Wire Wire Line
-	3750 4600 5450 4600
+	3750 4600 5850 4600
 Wire Wire Line
-	3750 4500 5600 4500
+	3750 4500 5850 4500
 $Comp
 L GND #PWR010
 U 1 1 5AFA54FD
@@ -359,21 +353,13 @@ Wire Wire Line
 Wire Wire Line
 	7000 4500 6350 4500
 Wire Wire Line
-	7000 1800 7000 2850
-Wire Wire Line
-	7000 2850 7000 4500
+	7000 1800 7000 4500
 Wire Wire Line
 	7150 4600 6350 4600
 Wire Wire Line
-	7150 1950 7150 3150
-Wire Wire Line
-	7150 3150 7150 4600
+	7150 1950 7150 4600
 Connection ~ 7150 3150
 Connection ~ 7000 2850
-Wire Wire Line
-	5600 4500 5850 4500
-Wire Wire Line
-	5450 4600 5850 4600
 NoConn ~ 5850 4700
 NoConn ~ 2500 5300
 NoConn ~ 2500 5200

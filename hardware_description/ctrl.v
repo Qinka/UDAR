@@ -27,7 +27,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
               parameter SER_FD_LEN = 12, parameter SER_FD_F = 250,
               parameter CAP_LEN = 16, parameter HC_TIMEOUT = 500, parameter HC_CNT_LEN = 9,
               parameter HC_FD_LEN = 6, parameter HC_FD_F = 25,
-              parameter CLK_PER_BIT = 435,
+              parameter CLK_PER_BIT = 50,
               parameter SEND_BYTES = 2, parameter SEND_CNT_LEN = 4)
    (
     // Default is 50MHz
@@ -52,27 +52,35 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
    wire    rst;
    assign rst = rst_q | rst_i;
 
-
+   
 
 
    // state
    localparam STATE_LEN = 4;
    localparam
-     s_rst        = 0,
-     s_frame_read = 1,
-     s_read_x     = 2,
-     s_read_y     = 3,
-     s_wait_ser   = 4,
-     s_trig       = 5,
-     s_frame_send = 6,
-     s_distn_send = 7,
-     s_rst_done   = 8,
-     s_frame_wait = 9,
-     s_distn_wait = 10,
-     s_trig_wait  = 11;
+     s_rst_en         = 1,  // Start to rst(rst => 1)
+     s_rst_ack        = 2,  // Send ack frame
+     s_rst_done       = 3,  // Ready to work
+     s_frame_read     = 4,  // Read the frames
+     s_servo_x_read   = 5,  // Read the servo x value
+     s_servo_y_read   = 6,  // Read the servo y value
+     s_servo_ack      = 7,  // Send servo ack frame
+     s_servo_done     = 8,  // Setting servo done
+     s_udar_trig      = 9,  // Trigger UDAR
+     s_udar_trig_wait = 10, // Wait UDAR done
+     s_udar_send      = 11, // UDAR send frame and data
+     s_udar_wait      = 12, // UDAR wait frame and data sent done
+     s_null           = 0;  // NULL
+   
+   localparam
+     f_init      = 8'b0000_0000, // Init frame
+     f_init_ack  = 8'b1010_1010, // Ack init frame
+     f_servo     = 8'b0000_0011, // Servo setting frame
+     f_servo_ack = 8'b1010_1011, // Servo ack frame
+     f_trig      = 8'b0000_1100, // UDAR trigger frame
+     f_trig_ack  = 8'b1010_1110; // UDAR trigger frame
 
-
-   reg [STATE_LEN - 1 : 0] state_d, state_q = s_rst;
+   reg [STATE_LEN - 1 : 0] state_d, state_q = s_rst_en;
 
 
    // read
@@ -145,7 +153,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
 
 
    // serial_r instance
-   serial_r #(.CLK_PER_BIT(CLK_PER_BIT)) u_sr
+   serial_r #(.CLK_PER_BIT(CLK_PER_BIT-1)) u_sr
      ( .clk(clk),
        .rst(rst),
        .rx(ser_rx),
@@ -162,7 +170,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
    assign ser_tx = tx_data;
 
    // serial_t instance
-   serial_t #(.CLK_PER_BIT(CLK_PER_BIT)) u_st
+   serial_t #(.CLK_PER_BIT(435)) u_st
      ( .clk(clk),
        .rst(rst),
        .tx(tx_data),
@@ -204,110 +212,99 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
       cnt_d = cnt_q;
 
       case (state_q)
-        s_rst: begin
+        s_rst_en: begin
            to_en_d = 1;
            rst_d = 1;
            time_d = 500;
-           state_d = s_rst_done;
+           ser_x_d = 150;
+           ser_y_d = 150;
+           len_d = 0;
+           cnt_d = 0;
+           state_d = s_rst_ack;
         end
 
-        s_rst_done: begin
-           to_en_d = 0;
-           if(to_done)
+        s_rst_ack:
+          if(to_done) begin
+             tx_data_d = f_init_ack;
+             tx_send_d = 1;
+             if(tx_busy)
+               state_d = s_rst_done;
+          end
+
+        s_rst_done:
+          if(! tx_busy)
+            state_d = s_frame_read;
+
+        s_frame_read:
+          if(rxd_q)
+            case (rx_data)
+              f_init:
+                state_d = s_rst_en;
+              f_servo:
+                state_d = s_servo_x_read;
+              f_trig:
+                state_d = s_udar_trig;
+              default:
+                state_d = s_rst_en;
+            endcase // case (rx_data)
+
+        s_servo_x_read:
+          if(rxd_q) begin
+             ser_x_d = rx_data;
+             state_d = s_servo_y_read;
+          end
+
+        s_servo_y_read:
+          if(rxd_q) begin
+             ser_y_d = rx_data;
+             state_d = s_servo_ack;
+          end
+
+        s_servo_ack: begin
+           tx_data_d = f_servo_ack;
+           tx_send_d = 1;
+           state_d = s_servo_done;
+        end
+
+        s_servo_done:
+          if(! tx_busy)
+            state_d = s_frame_read;
+        
+        s_udar_trig:
+          if(!hcsr04_done)
+            state_d = s_udar_trig_wait;
+          else
+            en_d = 1;
+
+        s_udar_trig_wait:
+          if(hcsr04_done) begin
+             state_d = s_udar_send;
+             len_d = len_w;
+             cnt_d = SEND_BYTES + 1;
+          end
+
+        s_udar_send:
+          if(cnt_q <= 0) begin
              state_d = s_frame_read;
-           else
-             state_d = state_q;
-        end
+          end
+          else if (tx_busy)
+            state_d = s_udar_wait;
+          else begin
+             if (cnt_q == SEND_BYTES + 1)
+               tx_data_d = f_trig_ack;
+             else
+               tx_data_d = len_q[cnt_q * 8 - 1 -: 8];
+             tx_send_d = 1;
+             //state_d = s_udar_wait; // Ӧ��Ҫɾ���ģ��Һ����ˣ���֪��Ϊ��һֱû��ɾ������
+          end
 
-        s_frame_read: begin
-           if(rxd_q) begin
-              case (rx_data)
-                8'b0000_0000:
-                  state_d = s_rst;
-                8'b1111_0000:
-                  state_d = s_read_x;
-              endcase // case (rx_data)
-           end
-        end // case: s_frame_read
-
-        s_read_x: begin
-           if(rxd_q) begin
-              ser_x_d = rx_data;
-              state_d = s_read_y;
-           end
-        end
-
-
-        s_read_y: begin
-           if(rxd_q) begin
-              ser_y_d = rx_data;
-              // timeout wait
-              state_d = s_wait_ser;
-              time_d = 1000;
-              to_en_d = 1;
-           end
-        end // case: s_read_y
-
-        s_wait_ser: begin
-           if(to_done) begin
-              state_d = s_trig;
-              en_d = 1;
-           end
-        end
-
-        s_trig: begin
-           if(!hcsr04_done)
-             state_d = s_trig_wait;
-           else
-             en_d = 1;
-
-        end
-
-        s_trig_wait: begin
-           if(hcsr04_done) begin
-              state_d = s_frame_send;
-              len_d = len_w;
-           end
-        end
-
-        s_frame_send: begin
-           if(tx_busy) begin
-              tx_send_d = 0;
-              state_d = s_frame_wait;
-           end
-           else begin
-              tx_data_d = 8'b0000_1111;
-              tx_send_d = 1;
-           end
-        end
-
-        s_frame_wait: begin
-           if(! tx_busy) begin
-              state_d = s_distn_send;
-              cnt_d = SEND_BYTES;
-           end
-        end
-
-        s_distn_send: begin
-           if(cnt_q <= 0) begin
-              state_d = s_frame_read;
-           end
-           else begin
-              if(tx_busy)
-                state_d = s_distn_wait;
-              else begin
-                 tx_data_d = len_q[cnt_q * 8 - 1 -: 8] ;
-                 tx_send_d = 1;
-              end
-           end
-        end // case: s_distn_wait
-
-        s_distn_wait: begin
-           if(! tx_busy) begin
-              state_d = s_distn_send;
-              cnt_d = cnt_q - 1;
-           end
-        end
+        s_udar_wait:
+          if(! tx_busy) begin
+             state_d = s_udar_send;
+             cnt_d = cnt_q - 1;
+          end
+        default:
+          state_d = s_rst_en;
       endcase // case (state_q)
    end // always @ (*)
 
@@ -324,7 +321,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
          tx_send_q <= 0;
          to_en_q <= 0;
          time_q <= 0;
-         state_q <= 0;
+         state_q <= s_rst_en;
       end
       else if(rx_done) begin
          rst_q <= rst_q;

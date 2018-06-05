@@ -32,8 +32,8 @@ NET "avr_rx_busy" LOC = P39 | IOSTANDARD = LVTTL;
 
 # UDAR
 # serial
-NET "udar_rx" LOC = P58 | IOSTANDARD = LVTTL;
-NET "udar_tx" LOC = P67 | IOSTANDARD = LVTTL;
+NET "udar_rx" LOC = P57 | IOSTANDARD = LVTTL;
+NET "udar_tx" LOC = P58 | IOSTANDARD = LVTTL;
 # pwm
 NET "udar_pwm_1" LOC = P94 | IOSTANDARD = LVTTL;
 NET "udar_pwm_2" LOC = P95 | IOSTANDARD = LVTTL;
