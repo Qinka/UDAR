@@ -153,7 +153,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
 
 
    // serial_r instance
-   serial_r #(.CLK_PER_BIT(CLK_PER_BIT-1)) u_sr
+   serial_r #(.CLK_PER_BIT(CLK_PER_BIT)) u_sr
      ( .clk(clk),
        .rst(rst),
        .rx(ser_rx),
@@ -170,7 +170,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
    assign ser_tx = tx_data;
 
    // serial_t instance
-   serial_t #(.CLK_PER_BIT(435)) u_st
+   serial_t #(.CLK_PER_BIT(CLK_PER_BIT)) u_st
      ( .clk(clk),
        .rst(rst),
        .tx(tx_data),
@@ -295,8 +295,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
              else
                tx_data_d = len_q[cnt_q * 8 - 1 -: 8];
              tx_send_d = 1;
-             //state_d = s_udar_wait; // Ӧ��Ҫɾ���ģ��Һ����ˣ���֪��Ϊ��һֱû��ɾ������
-          end
+			 end
 
         s_udar_wait:
           if(! tx_busy) begin

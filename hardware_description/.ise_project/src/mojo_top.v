@@ -43,8 +43,9 @@ assign led[0] = ~ u_tx;
 assign led[1] = ~ udar_rx;
 assign led[2] = u_pwm_1;
 assign led[3] = u_pwm_2;
-assign led[4] = 0;
-assign led[7:5] = 0;
+assign led[4] = u_trig;
+assign led[5] = udar_len;
+assign led[7:6] = 0;
 
 // UDAR
 
