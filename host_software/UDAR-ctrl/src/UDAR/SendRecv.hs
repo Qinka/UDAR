@@ -97,3 +97,41 @@ getDistance s x y t = do
           printf "Distance = %d\n" dis
           threadDelay 400
           avg (n - 1) (dis:xs)
+
+
+getFace :: SerialPort     -- ^ serialport
+        -> (Word8, Word8) -- ^ X(range)
+        -> (Word8, Word8) -- ^ Y(range)
+        -> Int            -- ^ Times
+        -> IO [(Word8, Word8, Word16, Word16)]
+getFace s (xB,xE) (yB, yE) t =
+  let lst = [(x,y) | x <- [xB..xE], y <- [yB..yE]]
+  in mapM (\(x,y) -> do
+              rt <- getDistance s x y t
+              putStrLn $ "\t\t\t\t" ++ show x ++ "\t" ++ show y ++ "\t " ++ show rt
+              threadDelay 500
+              return rt
+          ) lst
+
+transData :: [(Word8, Word8, Word16, Word16)] -> [(Float, Float, Float)]
+transData ds = step ds []
+  where step [] xs = xs
+        step ((x,y,d1,d2):ds) xs =
+          let x' = (fromIntegral x - 150) / 200 * pi
+              y' = (fromIntegral y - 150) / 200 * pi
+              phi   = pi / 2 - x'
+              theta = pi / 2 - y'
+              rho1   = fromIntegral d1 :: Float
+              rho2   = fromIntegral d2 :: Float
+              x1 = rho1 * sin phi * cos theta
+              y1 = rho1 * sin phi * sin theta
+              z1 = rho1 * cos phi
+              x2 = rho2 * sin phi * cos theta
+              y2 = rho2 * sin phi * sin theta
+              z2 = rho2 * cos phi
+          in step ds ((x1,y1,z1):(x2,y2,z2):xs)
+
+
+
+saveTransData :: FilePath -> [(Float, Float, Float)] -> IO ()
+saveTransData fp = writeFile fp . unlines . map (\(x,y,z) -> show x ++ " " ++ show y ++ " " ++ show z)
