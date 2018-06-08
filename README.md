@@ -1,10 +1,3 @@
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-</script>
-
 # UDAR
 
 This repo is a demo of **Ultrasound Detection And Ranging**, UDAR for short.
@@ -21,5 +14,5 @@ The hardware includes:
 * Ultrasound ranging module(URM).
 * ZigBee module(option)
 
-The holder with two servos can change the direction of URM to \\[(x,y)\\]
+The holder with two servos can change the direction of URM to $(x,y)$
 
