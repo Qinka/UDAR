@@ -28,7 +28,8 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
               parameter CAP_LEN = 16, parameter HC_TIMEOUT = 500, parameter HC_CNT_LEN = 9,
               parameter HC_FD_LEN = 6, parameter HC_FD_F = 25,
               parameter CLK_PER_BIT = 50,
-              parameter SEND_BYTES = 2, parameter SEND_CNT_LEN = 4)
+              parameter SEND_BYTES = 2, parameter SEND_CNT_LEN = 4,
+              parameter FQ_CNT_LEN = 11, parameter FQ_CNT = 2020)
    (
     // Default is 50MHz
     input  clk,
@@ -125,9 +126,9 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
 
    // hc sr04
    reg [SEND_CNT_LEN - 1 : 0] cnt_d, cnt_q = 0;
-   reg [CAP_LEN - 1 : 0]      len_d, len_q = 0;
+   reg [CAP_LEN + 7 : 0]      len_d, len_q = 0;
    reg                        en_d, en_q;
-   wire [CAP_LEN - 1 : 0]     len_w;
+   wire [CAP_LEN + 7 : 0]     len_w;
    wire                       trig_sig;
    wire                       hcsr04_done;
 
@@ -180,6 +181,17 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
        .send(tx_send_q)
        );
 
+   // FQ
+   wire                       clk_1us;
+
+   fq #(.CNT_LEN(FQ_CNT_LEN)) u_fq
+   (
+    .clk(clk),
+    .rst(rst),
+    .cnt_in(FQ_CNT),
+    .clk_out(clk_1us)
+    );
+   
 
    // Timeout
    reg                        to_en_d, to_en_q;
@@ -187,9 +199,9 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
    wire                       to_done;
 
    // Timeout instance
-   timeout #(.CNT_LEN(9)) u_rst_to
+   timeout #(.CNT_LEN(9)) u_timeout
      ( .rst(rst),
-       .clk(clk),
+       .clk(clk_1us),
        .timeout(time_q),
        .enable(to_en_q),
        .done(to_done)
@@ -202,7 +214,7 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
       state_d = state_q;
       to_en_d = 0;
       rst_d = 0;
-      time_d = 0;
+      time_d = time_q;
       ser_x_d = ser_x_q;
       ser_y_d = ser_y_q;
       en_d = 0;
@@ -271,16 +283,25 @@ module ctrl #(parameter PWM_LEN = 12, parameter PWM_MAX=2000, parameter POS_LEN 
             state_d = s_frame_read;
         
         s_udar_trig:
-          if(!hcsr04_done)
+          if(!hcsr04_done && !to_done)
             state_d = s_udar_trig_wait;
-          else
-            en_d = 1;
-
+          else begin
+             en_d = 1;
+             time_d = 1300;
+             to_en_d = 1;
+          end
+             
         s_udar_trig_wait:
-          if(hcsr04_done) begin
+          if(hcsr04_done || to_done) begin
              state_d = s_udar_send;
-             len_d = len_w;
-             cnt_d = SEND_BYTES + 1;
+             if (to_done) begin
+                len_d = {3{f_trig_ack}};
+                cnt_d = 1;
+             end
+             else begin
+                len_d = {f_trig_ack, len_w};
+                cnt_d = SEND_BYTES + 1;
+             end
           end
 
         s_udar_send:

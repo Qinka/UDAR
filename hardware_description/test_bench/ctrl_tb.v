@@ -151,7 +151,7 @@ module ctrl_tb;
 		rx = 1; // end bit
 		
 		#11000; // for trig
-		cap_sig = 1;
+		//cap_sig = 1;
 		#5800000;
 		cap_sig = 0;
 		
