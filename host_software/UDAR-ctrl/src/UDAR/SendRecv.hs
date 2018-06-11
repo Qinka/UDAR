@@ -58,8 +58,8 @@ sendRecvFrame s frm isFrame len = sr
   where sr = sendStep >> recvStep []
         sendStep = send s $ BL.toStrict (encode frm)
         recvStep [] = do
-          b <- BL.unpack . BL.fromStrict <$> recv s 1
-          if | null b           -> sr
+          b <- BL.unpack . BL.fromStrict <$> recv s 1	
+          if | null b           -> threadDelay 1000000 >> sr
              | isFrame (head b) -> recvStep b
              | otherwise        -> recvStep []
         recvStep bs =
@@ -72,7 +72,7 @@ sendRecvFrame s frm isFrame len = sr
           else do
             b <- BL.unpack . BL.fromStrict <$> recv s 1
             if null b
-              then sr 
+              then threadDelay 1000000 >> sr 
               else recvStep $ bs ++ b
 
 
@@ -87,7 +87,7 @@ getDistance s x y t = do
   when (y > 250 || y < 50) $ error $
     "Y servo position[50,250] can not be " ++ show y
   sendRecvFrame s (Servo x y) (==0xAB) 1
-  threadDelay 400
+  threadDelay 500000
   (disA,disB) <- avg t []
   printf "At %d %d, distance = (%d,%d) \n" x y disA disB
   return (x,y,disA, disB)
@@ -95,7 +95,6 @@ getDistance s x y t = do
         avg n xs = do
           TrigAck dis <- sendRecvFrame s Trig (==0xAE) 3
           printf "Distance = %d\n" dis
-          threadDelay 400
           avg (n - 1) (dis:xs)
 
 
@@ -109,7 +108,7 @@ getFace s (xB,xE) (yB, yE) t =
   in mapM (\(x,y) -> do
               rt <- getDistance s x y t
               putStrLn $ "\t\t\t\t" ++ show x ++ "\t" ++ show y ++ "\t " ++ show rt
-              threadDelay 500
+              threadDelay 500000
               return rt
           ) lst
 
@@ -117,10 +116,10 @@ transData :: [(Word8, Word8, Word16, Word16)] -> [(Float, Float, Float)]
 transData ds = step ds []
   where step [] xs = xs
         step ((x,y,d1,d2):ds) xs =
-          let x' = (fromIntegral x - 150) / 200 * pi
-              y' = (fromIntegral y - 150) / 200 * pi
-              phi   = pi / 2 - x'
-              theta = pi / 2 - y'
+          let x' = (250 - fromIntegral x) / 200 * pi
+              y' = (fromIntegral y - 50) / 200 * pi
+              phi   = x' -- pi / 2 - x'
+              theta = y' -- pi / 2 - y'
               rho1   = fromIntegral d1 :: Float
               rho2   = fromIntegral d2 :: Float
               x1 = rho1 * sin phi * cos theta
